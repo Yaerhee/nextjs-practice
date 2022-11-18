@@ -7,48 +7,22 @@ export default function Navbar() {
 
     return (
         <nav>
-            <img src="/vercel.svg"/>
-            <div>
-                {/* todo: legacyBehavior delete */}
-                <Link href="/" legacyBehavior>
-                    <a className={router.pathname === "/" ? "active" : ""}>Home</a>
-                </Link>
-                <Link href="/about" legacyBehavior>
-                    <a className={router.pathname === "/about" ? "active" : ""}>About</a>
-                </Link>
-            </div>
+            {/* className 에 random text 를 추가해서 HTML return -> No Duplicates!! */}
+            <Link href="/" className={ router.pathname === "/" ? 'active' : '' }>
+                Home
+            {/* don't use <a> tag from 13 version! */}
+            </Link>
+            <Link href="/about" className={ router.pathname === "/about" ? 'active' : '' }>
+                About
+            </Link>
             <style jsx>{`
-              nav {
-                display: flex;
-                gap: 10px;
-                flex-direction: column;
-                align-items: center;
-                padding-top: 20px;
-                padding-bottom: 10px;
-                box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
-                rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+              a {
+                text-decoration: none;
               }
-
-              img {
-                max-width: 100px;
-                margin-bottom: 5px;
-              }
-
-              nav a {
-                font-weight: 600;
-                font-size: 18px;
-              }
-              
-              nav div {
-                display: flex;
-                gap: 10px;
-              }
-
               .active {
                 color: tomato;
               }
-
             `}</style>
         </nav>
-    );
+    )
 }
