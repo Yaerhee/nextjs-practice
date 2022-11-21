@@ -1,14 +1,11 @@
 import Title from "../components/Title";
 import {useEffect, useState} from "react";
 
-const API_KEY = "c3a6fcbe2573a7042c0822d6d34ea043"
-
 export default function Index() {
     const [movies, setMovies] = useState([])
     useEffect(() => {
         (async () => {
-            const {results} = await (await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}`)
-            ).json()
+            const {results} = await (await fetch(`/api/movies`)).json()
             setMovies(results)
         })()
     }, [])
