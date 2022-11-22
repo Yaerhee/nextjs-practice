@@ -27,6 +27,10 @@ export default function Index() {
                 gap: 20px;
               }
 
+              .movie {
+                cursor: pointer;
+              }
+
               .movie img {
                 max-width: 100%;
                 border-radius: 12px;
