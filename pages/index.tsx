@@ -1,6 +1,12 @@
 import Title from "../components/Title";
 import {useEffect, useState} from "react";
 
+interface IMovieProps {
+    id: number;
+    poster_path: string;
+    original_title: string;
+}
+
 export default function Index() {
     const [movies, setMovies] = useState([])
     useEffect(() => {
@@ -13,7 +19,7 @@ export default function Index() {
         <div className="container">
             <Title title="Home"/>
             {!movies && <h4>Loading...</h4>}
-            {movies?.map((movie: any) => (
+            {movies?.map((movie: IMovieProps) => (
                 <div className="movie" key={movie.id}>
                     <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}/>
                     <h4>{movie.original_title}</h4>
