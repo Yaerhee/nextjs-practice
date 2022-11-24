@@ -1,12 +1,12 @@
 import Navbar from "../components/navbar";
 import Head from "next/head";
-import Title from "../components/Title";
+import Seo from "../components/Seo";
 
 export default function About() {
     return (
         <div>
             <Head>
-                <Title title="About" />
+                <Seo title="About" />
             </Head>
             <h1>About</h1>
         </div>

@@ -1,4 +1,4 @@
-import Title from "../components/Title";
+import Seo from "../components/Seo";
 import {GetServerSideProps, InferGetServerSidePropsType} from "next";
 import Link from "next/link";
 import {useRouter} from "next/router";
@@ -12,28 +12,16 @@ interface IMovieProps {
 export default function Index({results}: InferGetServerSidePropsType<GetServerSideProps>) {
     const router = useRouter()
     const onClick = (id: number, title: string) => {
-        router.push({
-                pathname: `/movies/${id}`,
-                query: {
-                    title,
-                }
-            },
-            `/movies/${id}` // URL masking
-        )
+        router.push(`/movies/${title}/${id}`)
     }
     return (
         <div className="container">
-            <Title title="Home"/>
+            <Seo title="Home"/>
             {results?.map((movie: IMovieProps) => (
                 <div className="movie" key={movie.id}
                      onClick={() => onClick(movie.id, movie.original_title)}>
                     <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}/>
-                    <Link href={{
-                        pathname: `/movies/${movie.id}`,
-                        query: {
-                            title: movie.original_title,
-                        }
-                    }}
+                    <Link href={`/movies/${movie.original_title}/${movie.id}`}
                           as={`/movies/${movie.id}`}>
                         <h4>{movie.original_title}</h4>
                     </Link>
