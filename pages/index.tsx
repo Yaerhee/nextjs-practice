@@ -1,5 +1,7 @@
 import Title from "../components/Title";
 import {GetServerSideProps, InferGetServerSidePropsType} from "next";
+import Link from "next/link";
+import {useRouter} from "next/router";
 
 interface IMovieProps {
     id: number;
@@ -7,14 +9,34 @@ interface IMovieProps {
     original_title: string;
 }
 
-export default function Index({ results }: InferGetServerSidePropsType<GetServerSideProps>) {
+export default function Index({results}: InferGetServerSidePropsType<GetServerSideProps>) {
+    const router = useRouter()
+    const onClick = (id: number, title: string) => {
+        router.push({
+                pathname: `/movies/${id}`,
+                query: {
+                    title,
+                }
+            },
+            `/movies/${id}` // URL masking
+        )
+    }
     return (
         <div className="container">
             <Title title="Home"/>
             {results?.map((movie: IMovieProps) => (
-                <div className="movie" key={movie.id}>
+                <div className="movie" key={movie.id}
+                     onClick={() => onClick(movie.id, movie.original_title)}>
                     <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}/>
-                    <h4>{movie.original_title}</h4>
+                    <Link href={{
+                        pathname: `/movies/${movie.id}`,
+                        query: {
+                            title: movie.original_title,
+                        }
+                    }}
+                          as={`/movies/${movie.id}`}>
+                        <h4>{movie.original_title}</h4>
+                    </Link>
                 </div>
             ))}
             <style jsx>{`
@@ -54,7 +76,7 @@ export default function Index({ results }: InferGetServerSidePropsType<GetServer
 export async function getServerSideProps() {
     // 이름 변경 불가! 서버에서 돌아가게 하는 코드
     // SSR 을 요청하기 때문에, 백엔드에서 실행되므로 이쪽에서 API_KEY 를 숨기는 방법도 있음
-    const { results } = await (
+    const {results} = await (
         await fetch(`http://localhost:3000/api/movies`)).json()
     return {
         props: {
